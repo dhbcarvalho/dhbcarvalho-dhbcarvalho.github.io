@@ -4,10 +4,36 @@
     <title>Mapa</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+        }
+        #map {
+            width: 100%;
+            height: calc(100% - 50px); /* 50px para deixar espaço para o cabeçalho */
+            margin-top: 50px; /* Deslocamento do mapa para baixo para evitar sobreposição com o cabeçalho */
+        }
+    </style>
 </head>
 <body>
-    <h1>Mapa</h1>
-    <div id="map" style="width: 800px; height: 600px;"></div>
+    <!-- Cabeçalho -->
+    <div id="header">
+        <a href="/">Voltar para Home</a>
+    </div>
+
+    <!-- Mapa -->
+    <div id="map"></div>
+
     <script>
         var map = L.map('map').setView([-22.863878, -43.244098], 10);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -21,11 +47,12 @@
             accessToken: 'YOUR_MAPBOX_ACCESS_TOKEN'
         }).addTo(map);
 
-        var map_html_file = "{{ map_html_file }}";
-        var iframe = document.createElement('iframe');
-        iframe.setAttribute('style', 'width: 100%; height: 100%; border: none');
-        iframe.setAttribute('src', map_html_file);
-        document.getElementById('map').appendChild(iframe);
+        // Adicione aqui o código para plotar os pontos no mapa
+        // Exemplo:
+        L.marker([-22.863878, -43.244098]).addTo(map)
+            .bindPopup('Este é um ponto de exemplo.');
+
+        // Adicione mais marcadores conforme necessário
     </script>
 </body>
 </html>

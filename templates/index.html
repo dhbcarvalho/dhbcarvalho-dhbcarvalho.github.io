@@ -2,14 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload de arquivo</title>
+    <title>Mapa Celebrite</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Upload de arquivo</h1>
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Enviar">
+        <div class="form-group">
+            <label for="file">Selecione um arquivo:</label>
+            <input type="file" class="form-control-file" id="file" name="file">
+        </div>
+        <input type="submit" value="Upload" class="btn btn-primary">
     </form>
+    <!-- Conteúdo da Página -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Informações do Arquivo</h1>
+                {% if success %}
+                    <div class="alert alert-success" role="alert">
+                        {{ success }}
+                    </div>
+                {% endif %}
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Label</th>
+                            <th scope="col">Latitude</th>
+                            <th scope="col">Longitude</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if data %}
+                            {% for row in data %}
+                                <tr>
+                                    <td>{{ row['#'] }}</td> <!-- Label -->
+                                    <td>{{ row['Latitude'] }}</td> <!-- Latitude -->
+                                    <td>{{ row['Longitude'] }}</td> <!-- Longitude -->
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <form action="/gerar_mapa" method="post">
+                    <input type="submit" value="Gerar Mapa" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
-<link rel="stylesheet" type="text/css" href="http://192.168.15.184:5000/static/css/style.css">
 </html>
